@@ -118,6 +118,38 @@ The solution should not create a new linked list.
 Function signature:
 public void partitionList(int x);
 
+This algorithm uses two dummy nodes and two pointers to maintain two separate partitions of the original list,
+One containing nodes with values less than x, and the other containing nodes with values greater than or equal to x.
+It then concatenates the two partitions and updates the head of the list accordingly.
+
+3 -> 8 -> 5 -> 10 -> 2 -> 1, x = 5
+Output: 3 -> 2 -> 1 -> 8 -> 5 -> 10
+
+Solution:
+    public void partitionList(int x) {
+        Node lowerChain = new Node(0);
+        Node upperChain = new Node(0);
+
+        Node lowerChainCur = lowerChain;
+        Node upperChainCur = upperChain;
+        Node cur = this.head;
+
+        while(cur != null) {
+            if (cur.value < x) {
+                lowerChainCur.next = cur;
+                lowerChainCur = cur;
+            } else {
+                upperChainCur.next = cur;
+                upperChainCur = cur;
+            }
+            cur = cur.next;
+        }
+
+        // Draw out to visualize how to attain this code
+        upperChainCur.next = null;
+        lowerChainCur.next = upperChain.next;
+        this.head = lowerChain.next;
+    }
 ==================================================================================================================
 Remove Duplicates
 ==================================================================================================================
